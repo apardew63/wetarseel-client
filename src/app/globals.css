@@ -1,0 +1,6 @@
+@import "tailwindcss";
+
+header.ant-layout-header.\!bg-white.border-b.border-gray-200.px-6.py-0.h-16.css-dev-only-do-not-override-1v28nim{
+    padding-left: 20px;
+    padding-right: 20px;
+}
