@@ -143,7 +143,7 @@ export default function WetarseelDashboard() {
               <line x1="12" x2="12.01" y1="16" y2="16"></line>
             </svg>
             <div>Your Business profile is incomplete.</div>
-            <a class="underline font-semibold" href="/nfjylyqk8yk8ssq/profile">
+            <a class="underline font-semibold" href="/className/profile">
               Update in Profile
             </a>
           </div>

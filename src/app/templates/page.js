@@ -7,6 +7,10 @@ import Image from "next/image";
 import darshboad from "../../../public/dashboard.png";
 import SyncTemplate from "@/components/ui/SyncTemplate";
 import { Input } from "@/components/ui/input";
+import Sidebar from "@/components/ui/Sidebar";
+import StatusDropdown from "@/components/ui/StatusDropdown";
+import ColumnDropdown from "@/components/ui/ColumnDropdown";
+import TemplateTable from "@/components/ui/TemplateTable";
 
 const { Sider, Header, Content } = Layout;
 const { useBreakpoint } = Grid;
@@ -16,6 +20,8 @@ export default function TemplatesPage() {
   const [collapsed, setCollapsed] = useState(false);
   const [drawerVisible, setDrawerVisible] = useState(false);
   const [syncModalVisible, setSyncModalVisible] = useState(false);
+  const [statusDropdownOpen, setStatusDropdownOpen] = useState(false);
+  const [columnDropdownOpen, setColumnDropdownOpen] = useState(false);
   const screens = useBreakpoint();
 
   useEffect(() => {
@@ -30,86 +36,26 @@ export default function TemplatesPage() {
     router.push("/login");
   };
 
-  const sidebarItems = [
-    {
-      key: "dashboard",
-      icon: <Image height={16} width={16} src={darshboad} />,
-      label: "Dashboard",
-      active: false,
-    },
-    { key: "live-chat", icon: <SoundOutlined />, label: "Live Chat" },
-    { key: "contacts", icon: <SoundOutlined />, label: "Contacts" },
-    {
-      key: "templates",
-      icon: <SoundOutlined />,
-      label: "Templates",
-      active: true,
-    },
-    { key: "campaign", icon: <SoundOutlined />, label: "Campaign" },
-    { key: "reports", icon: <SoundOutlined />, label: "Reports" },
-    { key: "agents", icon: <SoundOutlined />, label: "Agents" },
-    { key: "flows", icon: <SoundOutlined />, label: "Flows" },
-    { key: "messaging", icon: <SoundOutlined />, label: "Messaging Limits" },
-    { key: "api", icon: <SoundOutlined />, label: "API Settings" },
-    { key: "office", icon: <SoundOutlined />, label: "Office Settings" },
-  ];
-
-  const SidebarContent = () => (
-    <>
-      {/* Logo */}
-      <div className="h-16 flex items-center justify-center bg-gray-900 border-b border-gray-700">
-        <div className="text-green-400 text-2xl font-bold">WT</div>
-      </div>
-
-      {/* Navigation Menu */}
-      <div className="py-4">
-        {sidebarItems.map((item) => (
-          <div
-            key={item.key}
-            onClick={() =>
-              router.push(item.key === "dashboard" ? "/" : `/${item.key}`)
-            }
-            className={`mx-2 mb-1 px-4 py-3 rounded-lg cursor-pointer transition-colors ${
-              item.active
-                ? "bg-gray-700 text-white"
-                : "text-gray-300 hover:bg-gray-800 hover:text-white"
-            }`}
-          >
-            <div className="flex items-center space-x-3">
-              <span className="text-lg">{item.icon}</span>
-              {!collapsed && <span className="text-sm">{item.label}</span>}
-            </div>
-          </div>
-        ))}
-      </div>
-    </>
-  );
 
   return (
     <Layout className="min-h-screen">
-      {/* Sidebar (Desktop) */}
+      {/* Sidebar */}
       {screens.lg ? (
-        <Sider
-          collapsible
+        <Sidebar
           collapsed={collapsed}
-          onCollapse={setCollapsed}
-          className="bg-gray-900"
-          width={240}
-        >
-          <SidebarContent />
-        </Sider>
+          setCollapsed={setCollapsed}
+          drawerVisible={drawerVisible}
+          setDrawerVisible={setDrawerVisible}
+          activeItem="templates"
+        />
       ) : (
-        <Drawer
-          title="Menu"
-          placement="left"
-          onClose={() => setDrawerVisible(false)}
-          open={drawerVisible}
-          width={240}
-          closable={true}
-          bodyStyle={{ padding: 0, background: "#111827" }}
-        >
-          <SidebarContent />
-        </Drawer>
+        <Sidebar
+          collapsed={collapsed}
+          setCollapsed={setCollapsed}
+          drawerVisible={drawerVisible}
+          setDrawerVisible={setDrawerVisible}
+          activeItem="templates"
+        />
       )}
 
       <Layout>
@@ -133,7 +79,7 @@ export default function TemplatesPage() {
               <line x1="12" x2="12.01" y1="16" y2="16"></line>
             </svg>
             <div>Your Business profile is incomplete.</div>
-            <a class="underline font-semibold" href="/nfjylyqk8yk8ssq/profile">
+            <a class="underline font-semibold" href="/profile">
               Update in Profile
             </a>
           </div>
@@ -254,7 +200,7 @@ export default function TemplatesPage() {
                     </svg>
                     <span>Sync from Meta</span>
                   </button>
-                  <a href="/nfjylyqk8yk8ssq/templates/migrate-templates">
+                  <a href="/templates/migrate-templates">
                     <button className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 white bg-blue-100 text-blue-500 underline-offset-4 hover:underline h-10 px-4 py-2">
                       Migrate Templates
                     </button>
@@ -262,7 +208,9 @@ export default function TemplatesPage() {
                   <a
                     className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 white bg-gradient-to-r from-green-500 to-emerald-500 hover:bg-gradient-to-bl text-white h-10 px-4 py-2"
                     id="create-template1"
-                    href="/nfjylyqk8yk8ssq/templates/manage/create-new"
+                    href="/templates/manage/create-new"
+                    target="_blank"
+                    rel="noopener noreferrer"
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -284,23 +232,40 @@ export default function TemplatesPage() {
                   </a>
                 </div>
               </div>
-              <div classNameName="bg-white p-6 rounded-lg shadow-lg">
-                <div classNameName="flex items-center pb-6 space-x-4">
-                  <Input classNameName="flex h-10 w-full rounded-md border-2 border-gray-400 bg-white px-3 py-2 text-sm file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-gray-400 disabled:cursor-not-allowed disabled:opacity-50 focus:ring-0 focus:outline-none focus:border-[#075E54] max-w-72" placeholder="Filter by template" />
-                  <div className="flex items-center space-x-2"><button className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 white border border-input bg-background hover:bg-gray-50 hover:text-accent-foreground h-10 px-4 py-2 mb-0" type="button">Filter by status<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-chevron-down ml-1"><path d="m6 9 6 6 6-6"></path></svg></button></div>
-                  <div className="text-sm tracking-tight">Showing all records</div>
-                  <button className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 white border border-input bg-background hover:bg-gray-50 hover:text-accent-foreground h-10 px-4 py-2 ml-auto" type="button" class="lucide lucide-chevron-down ml-2 h-4 w-4"><path d="m6 9 6 6 6-6"></path></svg></button>
+              <div className="bg-white p-6 rounded-lg shadow-lg">
+                <div className="flex items-center pb-6 space-x-4">
+                  <Input
+                    className="flex h-10 w-full rounded-md border-2 border-gray-400 bg-white px-3 py-2 text-sm file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-gray-400 disabled:cursor-not-allowed disabled:opacity-50 focus:ring-0 focus:outline-none focus:border-[#075E54] max-w-72"
+                    placeholder="Filter by template"
+                  />
+                  <StatusDropdown statusDropdownOpen={statusDropdownOpen} setStatusDropdownOpen={setStatusDropdownOpen} />
+                  <div className="text-sm tracking-tight">
+                    Showing all records
+                  </div>
+                  <ColumnDropdown columnDropdownOpen={columnDropdownOpen} setColumnDropdownOpen={setColumnDropdownOpen} />
+                  <div
+                    role="alert"
+                    className="relative w-full rounded-lg border p-4 [&>svg~*]:pl-7 [&>svg+div]:translate-y-[-3px] [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-4 border-orange-500/50 text-orange-500 [&>svg]:text-orange-500 dark:border-orange-900/50 dark:text-orange-900 dark:dark:border-orange-900 dark:[&>svg]:text-orange-900 max-w-fit py-2"
+                  >
+                    <div className="text-sm [&_p]:leading-relaxed">
+                      Some columns are hidden
+                    </div>
+                  </div>
                 </div>
+                <div className="mb-1 text-sm">Showing 50 of 50 row(s).</div>
+                <TemplateTable />
               </div>
             </div>
           </div>
         </Content>
       </Layout>
 
-      {/* Sync Template Modal */}
       {syncModalVisible && (
         <>
-          <div className="fixed inset-0 bg-black/20 bg-opacity-50 z-40" onClick={() => setSyncModalVisible(false)}></div>
+          <div
+            className="fixed inset-0 bg-black/20 bg-opacity-50 z-40"
+            onClick={() => setSyncModalVisible(false)}
+          ></div>
           <SyncTemplate />
         </>
       )}
