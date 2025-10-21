@@ -4,7 +4,7 @@ const ColumnDropdown = ({ columnDropdownOpen, setColumnDropdownOpen }) => {
   return (
     <div className="relative ml-auto">
       <button
-        className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 white border border-input bg-background hover:bg-gray-50 hover:text-accent-foreground h-10 px-4 py-2"
+        className="inline-flex items-center border-gray-200 justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 white border border-input bg-background hover:bg-gray-50 hover:text-accent-foreground h-10 px-4 py-2"
         type="button"
         onClick={() => setColumnDropdownOpen(!columnDropdownOpen)}
       >
@@ -16,9 +16,9 @@ const ColumnDropdown = ({ columnDropdownOpen, setColumnDropdownOpen }) => {
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
           className="lucide lucide-chevron-down ml-2 h-4 w-4"
         >
           <path d="m6 9 6 6 6-6"></path>

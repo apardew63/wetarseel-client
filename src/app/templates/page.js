@@ -1,15 +1,10 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { Layout, Button, Badge, Drawer, Grid } from "antd";
+import { Layout, Button, Grid } from "antd";
 import { SoundOutlined, MenuOutlined } from "@ant-design/icons";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
-import darshboad from "../../../public/dashboard.png";
 import SyncTemplate from "@/components/ui/SyncTemplate";
-import { Input } from "@/components/ui/input";
 import Sidebar from "@/components/ui/Sidebar";
-import StatusDropdown from "@/components/ui/StatusDropdown";
-import ColumnDropdown from "@/components/ui/ColumnDropdown";
 import TemplateTable from "@/components/ui/TemplateTable";
 
 const { Sider, Header, Content } = Layout;
@@ -20,8 +15,8 @@ export default function TemplatesPage() {
   const [collapsed, setCollapsed] = useState(false);
   const [drawerVisible, setDrawerVisible] = useState(false);
   const [syncModalVisible, setSyncModalVisible] = useState(false);
-  const [statusDropdownOpen, setStatusDropdownOpen] = useState(false);
-  const [columnDropdownOpen, setColumnDropdownOpen] = useState(false);
+  // const [statusDropdownOpen, setStatusDropdownOpen] = useState(false);
+  // const [columnDropdownOpen, setColumnDropdownOpen] = useState(false);
   const screens = useBreakpoint();
 
   useEffect(() => {
@@ -35,7 +30,6 @@ export default function TemplatesPage() {
     localStorage.removeItem("token");
     router.push("/login");
   };
-
 
   return (
     <Layout className="min-h-screen">
@@ -179,7 +173,7 @@ export default function TemplatesPage() {
                 <div className="flex items-center space-x-2">
                   <button
                     onClick={() => setSyncModalVisible(true)}
-                    className="justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 white border border-input hover:bg-gray-50 hover:text-accent-foreground h-10 px-4 py-2 flex items-center space-x-2 bg-white"
+                    className="justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 white border border-gray-100 border-input hover:bg-gray-50 hover:text-accent-foreground h-10 px-4 py-2 flex items-center space-x-2 bg-white"
                     type="button"
                   >
                     <svg
@@ -206,11 +200,10 @@ export default function TemplatesPage() {
                     </button>
                   </a>
                   <a
-                    className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 white bg-gradient-to-r from-green-500 to-emerald-500 hover:bg-gradient-to-bl text-white h-10 px-4 py-2"
+                    className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-gradient-to-r from-green-500 to-emerald-500 hover:bg-gradient-to-bl text-white h-10 px-4 py-2"
                     id="create-template1"
                     href="/templates/manage/create-new"
                     target="_blank"
-                    rel="noopener noreferrer"
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -219,9 +212,9 @@ export default function TemplatesPage() {
                       viewBox="0 0 24 24"
                       fill="none"
                       stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
                       className="lucide lucide-circle-plus mr-2 h-5 w-5"
                     >
                       <circle cx="12" cy="12" r="10"></circle>
@@ -233,7 +226,7 @@ export default function TemplatesPage() {
                 </div>
               </div>
               <div className="bg-white p-6 rounded-lg shadow-lg">
-                <div className="flex items-center pb-6 space-x-4">
+                {/* <div className="flex items-center pb-6 space-x-4">
                   <Input
                     className="flex h-10 w-full rounded-md border-2 border-gray-400 bg-white px-3 py-2 text-sm file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-gray-400 disabled:cursor-not-allowed disabled:opacity-50 focus:ring-0 focus:outline-none focus:border-[#075E54] max-w-72"
                     placeholder="Filter by template"
@@ -251,7 +244,7 @@ export default function TemplatesPage() {
                       Some columns are hidden
                     </div>
                   </div>
-                </div>
+                </div> */}
                 <div className="mb-1 text-sm">Showing 50 of 50 row(s).</div>
                 <TemplateTable />
               </div>

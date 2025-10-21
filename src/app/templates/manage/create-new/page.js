@@ -65,7 +65,6 @@ export default function CreateTemplatePage() {
   };
 
 
-  // ✅ Template options data
   const templates = [
     {
       title: "Marketing Template",
@@ -93,7 +92,6 @@ export default function CreateTemplatePage() {
 
   const handleContinue = () => {
     if (selectedTemplate) {
-      // Navigate to a new page based on selected template
       router.push(`/templates/manage/create-new/${selectedTemplate}`);
     }
   };
@@ -109,7 +107,6 @@ export default function CreateTemplatePage() {
       />
 
       <Layout>
-        {/* Header + Banner */}
         <div className="w-full flex items-center justify-center border border-orange-200 bg-orange-100 p-2 text-sm">
           <div className="flex items-center gap-2 text-orange-800">
             <svg
@@ -177,9 +174,9 @@ export default function CreateTemplatePage() {
 
         {/* ✅ Main Content with Template Type */}
         <Content className="p-6 bg-gray-100">
-          <div className="flex h-full flex-col bg-blue-50 p-6 overflow-y-scroll">
-            <div className="flex flex-1 items-center bg-white py-3 px-5 shadow-sm">
-              <div className="font-bold text-xl flex-1">
+          <div className="flex flex-col bg-blue-50 p-6 overflow-y-hidden">
+            <div className="flex justify-between bg-white py-3 px-5 shadow-sm overflow-y-hidden">
+              <div className="font-bold text-xl">
                 New message template
               </div>
               <div className="space-x-4">

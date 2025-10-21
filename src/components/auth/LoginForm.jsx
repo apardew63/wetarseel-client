@@ -11,14 +11,13 @@ const LoginForm = () => {
 
   return (
     <section className="min-h-screen w-full grid grid-cols-1 md:grid-cols-2">
-      {/* Left side: Full height image */}
       <div className="relative w-full h-full">
         <Image
           src="/bg-wetarseel.jpg"
           alt="Login banner"
           fill
           className="object-cover"
-          priority
+          priority  
         />
       </div>
 
