@@ -5,29 +5,40 @@ import Image from "next/image";
 import { Eye, EyeOff } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { api } from "@/lib/api";
 
 export default function SignupPage() {
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const onFinish = async (values) => {
+    // Validate passwords match
+    if (values.password !== values.confirmPassword) {
+      setError("Passwords do not match");
+      return;
+    }
+
+    setIsLoading(true);
+    setError("");
+
     try {
-      const response = await fetch("http://localhost:3001/signup", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(values),
+      const { data } = await api.signup({
+        email: values.email,
+        password: values.password,
+        firstName: values.firstName,
+        lastName: values.lastName,
       });
 
-      const data = await response.json();
-
-      if (response.ok) {
-        alert(data.message || "Signup successful!");
-        router.push("/login");
-      } else {
-        alert(data.error || "Signup failed");
-      }
+      alert(data.message || "Signup successful!");
+      router.push("/login");
     } catch (error) {
-      alert("Network error");
+      console.error("Signup error:", error);
+      setError(error.message || "Network error. Please check if the server is running.");
+      alert(error.message || "Network error. Please check if the server is running.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -213,11 +224,16 @@ export default function SignupPage() {
                 </div>
               </div>
 
+              {error && (
+                <div className="text-red-600 text-sm text-center">{error}</div>
+              )}
+
               <Button
                 type="submit"
-                className="w-full bg-[#075E54] hover:bg-[#064C45]"
+                disabled={isLoading}
+                className="w-full bg-[#075E54] hover:bg-[#064C45] disabled:opacity-50"
               >
-                Sign Up
+                {isLoading ? "Signing up..." : "Sign Up"}
               </Button>
             </form>
 

@@ -6,36 +6,35 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { Eye, EyeOff } from "lucide-react";
 import { message } from "antd";
+import { api } from "@/lib/api";
 
 export default function LoginPage() {
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const onFinish = async (values) => {
+    setIsLoading(true);
+
     try {
-      const response = await fetch("http://localhost:3001/signin", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: values.email,
-          password: values.password,
-        }),
+      const { data } = await api.signin({
+        email: values.email,
+        password: values.password,
       });
 
-      const data = await response.json();
-
-      if (response.ok) {
-        // Store the access token
+      // Store the access token
+      if (data.session?.access_token) {
         localStorage.setItem("token", data.session.access_token);
         message.success("Login successful!");
         router.push("/");
       } else {
-        message.error(data.error || "Login failed");
+        message.error("Login failed: No session token received");
       }
     } catch (error) {
-      message.error("Network error");
+      console.error("Login error:", error);
+      message.error(error.message || "Network error. Please check if the server is running.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -147,9 +146,10 @@ export default function LoginPage() {
 
               <Button
                 type="submit"
-                className="w-full bg-[#075E54] hover:bg-[#064C45]"
+                disabled={isLoading}
+                className="w-full bg-[#075E54] hover:bg-[#064C45] disabled:opacity-50"
               >
-                Login
+                {isLoading ? "Logging in..." : "Login"}
               </Button>
             </form>
 
